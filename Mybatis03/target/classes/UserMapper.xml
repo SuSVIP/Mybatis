@@ -9,9 +9,21 @@
         select * from user
     </select>
 
-    <select id="addUser" resultType="com.zzl.pojo.User">
-        insert into user(useid,usename,password) values(#{useid},#{usename},#{password});
+    <select id="findById" resultType="com.zzl.pojo.User">
+        select * from user where useid=#{useid}
     </select>
+
+    <select id="findUserLike" resultType="com.zzl.pojo.User">
+        select * from user where usename like #{value}
+    </select>
+
+    <insert id="addUser" parameterType="com.zzl.pojo.User">
+        insert into user(useid,usename,password) values(#{useid},#{usename},#{password});
+    </insert>
+
+    <insert id="addByMap" parameterType="map">
+        insert into user (useid, usename, password) values (#{id}, #{name}, #{pwd});
+    </insert>
 
     <update id="updateUser" parameterType="com.zzl.pojo.User">
         update user set usename = #{usename},password=#{password} where useid=#{useid};
