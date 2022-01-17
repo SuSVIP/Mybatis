@@ -5,7 +5,9 @@ import com.zzl.utils.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserMapperTest {
 
@@ -38,6 +40,22 @@ public class UserMapperTest {
         sqlSession.close();
     }
 
+    //模糊查询
+    @Test
+    public void findUserLike(){
+        SqlSession sqlSession=MybatisUtils.getSqlSession();
+        UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+
+        List<User> list=userMapper.findUserLike("%王%");
+
+        for (User user:list){
+            System.out.println(user);
+        }
+
+
+        sqlSession.close();
+    }
+
     //增加一个用户
     @Test
     public void addUser(){
@@ -51,13 +69,29 @@ public class UserMapperTest {
         sqlSession.close();
     }
 
+    @Test
+    public void addByMap(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id",5);
+        map.put("name","dong");
+        map.put("pwd","12345");
+        mapper.addByMap(map);
+
+        //提交事务
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
     //修改一个用户
     @Test
     public void updateUser(){
         SqlSession sqlSession=MybatisUtils.getSqlSession();
         UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
 
-        userMapper.updateUser(new User(4,"hahe","1231"));
+        userMapper.updateUser(new User(4,"hehe","1231"));
 
         //增删改要提交事务
         sqlSession.commit();
