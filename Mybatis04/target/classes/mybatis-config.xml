@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<!--    &lt;!&ndash;引入外部配置文件&ndash;&gt;
+    <properties resource="db.properties"/>
+
+    &lt;!&ndash;可以给实体类起别名&ndash;&gt;
+    <typeAliases>
+        <typeAlias type="com.zzl.pojo.User" alias="User"></typeAlias>
+    </typeAliases>-->
+
+    <!-- 配置 mybatis 的环境 -->
+    <environments default="development">
+        <!-- 配置 mysql 的环境 -->
+        <environment id="development">
+            <!-- 配置事务的类型 -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 配置连接数据库的信息：用的是数据源(连接池) -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/test1?serverTimezone=UTC"/>
+                <property name="username" value="sa"/>
+                <property name="password" value="jk200326"/>
+            </dataSource>
+        </environment>
+    </environments>
+     <!--绑定接口 -->
+    <mappers>
+        <mapper class="com.zzl.mapper.UserMapper"/>
+    </mappers>
+</configuration>
